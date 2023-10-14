@@ -40,12 +40,13 @@ async function catWalk() {
   const startPos = -img.width;
   const centerPos = (window.innerWidth - img.width) / 2;
   const stopPos = window.innerWidth;
-  while (true) {
-    await walk(img, startPos, centerPos);
-    await dance(img);
-    await walk(img, centerPos, stopPos);
+  function walkAndDance(){
+    walk(img, startPos, centerPos)
+    .then(() =>  dance(img))
+    .then(()=>walk(img, centerPos, stopPos))
+    .then(()=>walkAndDance());
   }
-   
+    walkAndDance();
 
 }
 
